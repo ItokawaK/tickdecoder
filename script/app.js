@@ -76,13 +76,14 @@ function parse_paf(pafStr) {
   }
   let queries = Object.values(queryDict);
   queries.forEach((el) => {el.selectHits()});
-  console.log(queries);
   let top_pafs = select_top_hit(pafs);
   let tabledata = [];
 
   queries.forEach( (el) => {
-    tabledata.push(el.out_tble_row())
+    tabledata = tabledata.concat(el.out_tble_rows())
   })
+
+  console.log(tabledata);
 
   function format(cell, formatterParams) {
     let value = cell.getValue();
@@ -92,38 +93,19 @@ function parse_paf(pafStr) {
   }
 
   var table = new Tabulator("#out-table", {
-      height:"600px",
+      height:"400px",
       data:tabledata,           //assign data to table
       layout:"fitColumns",      //fit columns to width of table
+      // renderHorizontal:"virtual",
       responsiveLayout:"hide",  //hide columns that dont fit on the table
 
       columnHeaderVertAlign:"bottom",
       columns: [
-        {title:"Query", field:"Query", width:150, frozen:true},
-        {
-          title:"Best Hit",
-          columns:[
-            {title:"Species", field:"Species_1", width:200, formatter:format},
-            {title:"Score", field:"Score_1", width:50, formatter:format},
-            {title:"Homology", field:"Homology_1", formatter:format}
-          ]
-        },
-        {
-          title:"2nd Hit",
-          columns:[
-            {title:"Species", field:"Species_2", width:200, formatter:format},
-            {title:"Score", field:"Score_2", width:50, formatter:format},
-            {title:"Homology", field:"Homology_2", formatter:format}
-          ]
-        },
-        {
-          title:"3rd Hit",
-          columns:[
-            {title:"Species", field:"Species_3", width:200, formatter:format},
-            {title:"Score", field:"Score_3", width:50, formatter:format},
-            {title:"Homology", field:"Homology_3", formatter:format}
-          ]
-        }
+        {title:"Query", field:"Query", width:150,
+                 frozen:true, formatter:format, headerSort:false},
+        {title:"Possible Species", field:"Species", width:300, formatter:format, headerSort:false},
+        {title:"Score", field:"Score", width:100, formatter:format, headerSort:false},
+        {title:"Homology", field:"Homology", formatter:format, headerSort:false}
       ]
   });
 }

@@ -27,7 +27,7 @@ class PAF {
       this.attr[a[0]] = v;
     }
 
-    this.identity = ((1 - this.attr['de']) * 100).toFixed(2);
+    this.identity = ((1 - this.attr['de']) * 100).toFixed(1);
     this.scov = (this.send - this.sstart) / this.slen * 100;
   }
 
@@ -89,24 +89,30 @@ class Query {
     }
   }
 
-  out_tble_row () {
+  out_tble_rows () {
     if (this.filteredHits) {
-      let row = {};
+      let rows = [];
       let hs = this.filteredHits;
-      row['Query'] = this.id;
       for (let i=0; i<hs.length; i++){
         let h = hs[i];
-        if (h.identity >=98) {
-          row[`Species_${i+1}`] = `<span style="color:#006400"><b><i>${h.species}</i></b></span>`;
-          row[`Score_${i+1}`] = `<span style="color:#ff8c00"><b>${h.attr['AS']}</b></span>`;
-          row[`Homology_${i+1}`] = `<span style="color:#ff4500"><b>${h.identity}%</b></span>`;
-        }else{
-          row[`Species_${i+1}`] = `<span style="color:gray"><i>${h.species}</i></span>`;
-          row[`Score_${i+1}`] = `<span style="color:gray">${h.attr['AS']}</span>`;
-          row[`Homology_${i+1}`] = `<span style="gray:red">${h.identity}%</span>`;
+        let row = {};
+        if (i == 0) {
+          row['Query'] = `${this.id}`
+        } else {
+          row['Query'] = `   &#x2514`
         }
+        if (h.identity >=98) {
+          row[`Species`] = `<span style="color:#006400"><b><i>${h.species}</i></b></span>`;
+          row[`Score`] = `<span style="color:#ff8c00"><b>${h.attr['AS']}</b></span>`;
+          row[`Homology`] = `<span style="color:#ff4500"><b>${h.identity}%</b></span>`;
+        }else{
+          row[`Species`] = `<span style="color:gray"><i>${h.species}</i></span>`;
+          row[`Score`] = `<span style="color:gray">${h.attr['AS']}</span>`;
+          row[`Homology`] = `<span style="gray:red">${h.identity}%</span>`;
+        }
+        rows.push(row)
       }
-      return row
+      return rows
     }
   }
 }
