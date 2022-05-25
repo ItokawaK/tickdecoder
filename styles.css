@@ -20,6 +20,10 @@
   font-size: 10pt
 }
 
+#repository {
+  text-align: center
+}
+
 #loading {
   position : absolute;
   left : 0;
