@@ -105,10 +105,12 @@ class Query {
           row[`Species`] = `<span style="color:#006400"><b><i>${h.species}</i></b></span>`;
           row[`Score`] = `<span style="color:#ff8c00"><b>${h.attr['AS']}</b></span>`;
           row[`Homology`] = `<span style="color:#ff4500"><b>${h.identity}%</b></span>`;
+          row[`Quality`] = `&#x1f917`
         }else{
           row[`Species`] = `<span style="color:gray"><i>${h.species}</i></span>`;
           row[`Score`] = `<span style="color:gray">${h.attr['AS']}</span>`;
           row[`Homology`] = `<span style="gray:red">${h.identity}%</span>`;
+          row[`Quality`] = `&#x1f914`;
         }
         rows.push(row)
       }

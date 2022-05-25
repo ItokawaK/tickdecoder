@@ -98,14 +98,14 @@ function parse_paf(pafStr) {
       layout:"fitColumns",      //fit columns to width of table
       // renderHorizontal:"virtual",
       responsiveLayout:"hide",  //hide columns that dont fit on the table
-
       columnHeaderVertAlign:"bottom",
       columns: [
         {title:"Query", field:"Query", width:150,
                  frozen:true, formatter:format, headerSort:false},
         {title:"Possible Species", field:"Species", width:300, formatter:format, headerSort:false},
         {title:"Score", field:"Score", width:100, formatter:format, headerSort:false},
-        {title:"Homology", field:"Homology", formatter:format, headerSort:false}
+        {title:"Homology", field:"Homology", width:100,formatter:format, headerSort:false},
+        {title:"Quality", field:"Quality", width:75,formatter:format, headerSort:false}
       ]
   });
 }
